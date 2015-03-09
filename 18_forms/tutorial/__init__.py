@@ -7,7 +7,7 @@ def main(global_config, **settings):
         'itsaseekreet')
     config = Configurator(settings=settings,
                           session_factory=my_session_factory)
-    config.include('pyramid_chameleon')
+    config.include('pyramid_jinja2')
     ###
     config.add_route('wiki_view', '/')
     config.add_route('wikipage_add', '/wiki/add')

@@ -33,27 +33,27 @@ class TutorialViews(object):
         last = self.request.matchdict['last']
         return first + ' ' + last
 
-    @view_config(route_name='home', renderer='home.pt')
+    @view_config(route_name='home', renderer='home.jinja2')
     def home(self):
         log.debug('In home view')
         return {'page_title': 'Home View'}
 
     # Retrieving /howdy/first/last the first time
-    @view_config(renderer='hello.pt')
+    @view_config(renderer='hello.jinja2')
     @view_config(route_name='hello_json', renderer='json')
     def hello(self):
         log.debug('In hello view')
         return {'page_title': 'Hello View'}
 
     # Posting to /howdy/first/last via the "Edit" submit button
-    @view_config(request_method='POST', renderer='edit.pt')
+    @view_config(request_method='POST', renderer='edit.jinja2')
     def edit(self):
         new_name = self.request.params['new_name']
         return {'page_title': 'Edit View', 'new_name': new_name}
 
     # Posting to /howdy/first/last via the "Delete" submit button
     @view_config(request_method='POST', request_param='form.delete',
-                 renderer='delete.pt')
+                 renderer='delete.jinja2')
     def delete(self):
         print ('Deleted')
         return {'page_title': 'Delete View'}
@@ -86,12 +86,12 @@ class WikiViews(object):
     def reqts(self):
         return self.wiki_form.get_widget_resources()
 
-    @view_config(route_name='wiki_view', renderer='wiki_view.pt')
+    @view_config(route_name='wiki_view', renderer='wiki_view.jinja2')
     def wiki_view(self):
         return dict(pages=pages.values())
 
     @view_config(route_name='wikipage_add',
-                 renderer='wikipage_addedit.pt')
+                 renderer='wikipage_addedit.jinja2')
     def wikipage_add(self):
         form = self.wiki_form.render()
 
@@ -117,14 +117,14 @@ class WikiViews(object):
 
         return dict(form=form)
 
-    @view_config(route_name='wikipage_view', renderer='wikipage_view.pt')
+    @view_config(route_name='wikipage_view', renderer='wikipage_view.jinja2')
     def wikipage_view(self):
         uid = self.request.matchdict['uid']
         page = pages[uid]
         return dict(page=page)
 
     @view_config(route_name='wikipage_edit',
-                 renderer='wikipage_addedit.pt')
+                 renderer='wikipage_addedit.jinja2')
     def wikipage_edit(self):
         uid = self.request.matchdict['uid']
         page = pages[uid]
